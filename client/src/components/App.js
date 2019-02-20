@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { characters } from '../data/Characters'
 import Form from './Form/Form'
 import Table from './Table/Table'
+import uuidv4 from 'uuid'
 
 export default class App extends Component {
   state = {
@@ -29,22 +30,32 @@ export default class App extends Component {
   }
 
   handleSubmit = e => {
-    const { name, job, characters } = this.state
+    const { name, job, characters, id } = this.state
 
     if (!name || !job) {
       alert('Please fill out both fields.')
     } else {
       e.preventDefault()
-      this.setState({
-        characters: [...characters, { name, job }],
-        name: '',
-        job: ''
+      this.setState(prevState => {
+        return {
+          characters: [...characters, { name, job, id: uuidv4() }],
+          name: '',
+          job: ''
+        }
       })
     }
   }
+  handleDelete = id => {
+    const { characters } = this.state
+    const notDeleted = characters.filter(character => character.id !== id)
+    this.setState({
+      characters: notDeleted
+    })
+  }
 
   render() {
-    const { characters, name, job } = this.state
+    console.log(this.state)
+    const { characters, name, job, id } = this.state
     return (
       <>
         <Form
@@ -55,7 +66,7 @@ export default class App extends Component {
           onJobChange={this.onJobChange}
           handleReset={this.handleReset}
         />
-        <Table characters={characters} />
+        <Table characters={characters} handleDelete={this.handleDelete} id={id} />
       </>
     )
   }

@@ -1,30 +1,37 @@
 export const characters = [
   {
     name: 'Charlie',
-    job: 'Janitor'
+    job: 'Janitor',
+    id: 0
   },
   {
     name: 'Brandon',
-    job: 'Actor'
+    job: 'Actor',
+    id: 1
   },
   {
     name: 'Jen',
-    job: 'Actress'
+    job: 'Actress',
+    id: 2
   },
   {
     name: 'Cletus',
-    job: 'Writer'
+    job: 'Writer',
+    id: 3
   },
   {
     name: 'Dustin',
-    job: 'Ninja'
+    job: 'Ninja',
+    id: 4
   },
   {
     name: 'Adam',
-    job: 'React GURU'
+    job: 'React GURU',
+    id: 5
   },
   {
     name: 'Cletus',
-    job: 'Vue Superstar'
+    job: 'Vue Superstar',
+    id: 6
   }
 ]

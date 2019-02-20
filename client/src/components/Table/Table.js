@@ -2,11 +2,11 @@ import React from 'react'
 import TableHeader from './TableHeader'
 import TableBody from './TableBody'
 
-export default function Table({ characters }) {
+export default function Table({ characters, handleDelete, id }) {
   return (
     <table>
       <TableHeader />
-      <TableBody characters={characters} />
+      <TableBody characters={characters} handleDelete={handleDelete} id={id} />
     </table>
   )
 }
