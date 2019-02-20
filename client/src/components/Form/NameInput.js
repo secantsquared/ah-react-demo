@@ -1,14 +1,14 @@
 import React from 'react'
 
-export default function NameInput(props) {
-  const handleChange = e => {
-    props.onNameChange(e.target.value)
-  }
-
+export default function NameInput({ name, onNameChange }) {
   return (
     <>
-      <input type="text" placeholder="name" value={props.name} onChange={handleChange} />
-      <input type="submit" value="submit" />
+      <input
+        type="text"
+        placeholder="name"
+        value={name}
+        onChange={e => onNameChange(e.target.value)}
+      />
     </>
   )
 }

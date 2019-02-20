@@ -1,10 +1,10 @@
 import React from 'react'
 import uuidv4 from 'uuid'
 
-export default function TableBody(props) {
+export default function TableBody({ characters }) {
   return (
     <tbody>
-      {props.characters.map(character => {
+      {characters.map(character => {
         return (
           <tr key={uuidv4()}>
             <td>{character.name}</td>
@@ -12,7 +12,9 @@ export default function TableBody(props) {
             <td>
               <button>Delete</button>
             </td>
-            <td>Edit</td>
+            <td>
+              <button>Edit</button>
+            </td>
           </tr>
         )
       })}

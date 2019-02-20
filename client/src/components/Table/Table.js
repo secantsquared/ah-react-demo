@@ -2,11 +2,11 @@ import React from 'react'
 import TableHeader from './TableHeader'
 import TableBody from './TableBody'
 
-export default function Table(props) {
+export default function Table({ characters }) {
   return (
     <table>
       <TableHeader />
-      <TableBody characters={props.characters} />
+      <TableBody characters={characters} />
     </table>
   )
 }
