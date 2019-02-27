@@ -1,7 +1,7 @@
 import React from 'react'
 import uuidv4 from 'uuid'
 
-export default function TableBody({ characters, handleDelete }) {
+export default function TableBody({ characters, handleDelete, toggleEdit }) {
   return (
     <tbody>
       {characters.map(character => {
@@ -13,7 +13,7 @@ export default function TableBody({ characters, handleDelete }) {
               <button onClick={() => handleDelete(character.id)}>Delete</button>
             </td>
             <td>
-              <button>Edit</button>
+              <button onClick={toggleEdit}>Edit</button>
             </td>
           </tr>
         )

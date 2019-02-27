@@ -3,12 +3,14 @@ import { characters } from '../data/Characters'
 import Form from './Form/Form'
 import Table from './Table/Table'
 import uuidv4 from 'uuid'
+import './App.css'
 
 export default class App extends Component {
   state = {
     characters: [],
     name: '',
-    job: ''
+    job: '',
+    isEditing: false
   }
 
   componentDidMount() {
@@ -30,7 +32,7 @@ export default class App extends Component {
   }
 
   handleSubmit = e => {
-    const { name, job, characters, id } = this.state
+    const { name, job, characters } = this.state
 
     if (!name || !job) {
       alert('Please fill out both fields.')
@@ -53,11 +55,21 @@ export default class App extends Component {
     })
   }
 
+  toggleEdit = () => {
+    this.setState(prevState => {
+      return {
+        isEditing: !prevState.isEditing
+      }
+    })
+  }
+
+  handleEdit = id => {}
+
   render() {
-    console.log(this.state)
     const { characters, name, job, id } = this.state
     return (
-      <>
+      <div className="medium-container alternate-background">
+        <Table characters={characters} handleDelete={this.handleDelete} id={id} />
         <Form
           name={name}
           job={job}
@@ -66,8 +78,7 @@ export default class App extends Component {
           onJobChange={this.onJobChange}
           handleReset={this.handleReset}
         />
-        <Table characters={characters} handleDelete={this.handleDelete} id={id} />
-      </>
+      </div>
     )
   }
 }
