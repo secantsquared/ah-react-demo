@@ -63,13 +63,40 @@ export default class App extends Component {
     })
   }
 
-  handleEdit = id => {}
+  handleEdit = (e, id) => {
+    console.log(this.state)
+    e.preventDefault()
+    //copy the original - work up to id to "id" the object
+    //find the index of object
+    //copy array to index, insert new updates, copy the rest
+    const { characters, job, name } = this.state
+    const index = characters.findIndex(character => character.id === id)
+    console.log('INDEX', index)
+    const slice = [
+      ...characters.slice(0, index),
+      { name, job },
+      { ...characters.slice(index + 1) }
+    ]
+    console.log(slice)
+    this.setState({
+      characters: [
+        ...characters.slice(0, index),
+        { name, job },
+        ...characters.slice(index + 1)
+      ]
+    })
+  }
 
   render() {
-    const { characters, name, job, id } = this.state
+    const { characters, name, job, id, isEditing } = this.state
     return (
       <div className="medium-container alternate-background">
-        <Table characters={characters} handleDelete={this.handleDelete} id={id} />
+        <Table
+          characters={characters}
+          handleDelete={this.handleDelete}
+          toggleEdit={this.toggleEdit}
+          id={id}
+        />
         <Form
           name={name}
           job={job}
@@ -77,6 +104,8 @@ export default class App extends Component {
           handleSubmit={this.handleSubmit}
           onJobChange={this.onJobChange}
           handleReset={this.handleReset}
+          handleEdit={this.handleEdit}
+          isEditing={isEditing}
         />
       </div>
     )
