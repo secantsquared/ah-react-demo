@@ -2,16 +2,29 @@ import React from 'react'
 import NameInput from './NameInput'
 import JobInput from './JobInput'
 
-export default function Form(props) {
+export default function Form({
+  isEditing,
+  handleEdit,
+  handleSubmit,
+  name,
+  job,
+  handleChange,
+  setCurrentId,
+}) {
   return (
-    <form onSubmit={props.isEditing ? props.handleEdit : props.handleSubmit}>
+    <form onSubmit={isEditing ? handleEdit : handleSubmit}>
       <NameInput
-        name={props.name}
-        job={props.job}
-        onNameChange={props.onNameChange}
+        name={name}
+        job={job}
+        handleChange={handleChange}
+        setCurrentId={setCurrentId}
       />
-      <JobInput job={props.job} onJobChange={props.onJobChange} />
-      <input type="submit" value={props.isEditing ? 'updating' : 'submit'} />
+      <JobInput
+        job={job}
+        handleChange={handleChange}
+        setCurrentId={setCurrentId}
+      />
+      <input type="submit" value={isEditing ? 'update' : 'submit'} />
     </form>
   )
 }

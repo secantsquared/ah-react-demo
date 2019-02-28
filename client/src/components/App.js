@@ -10,24 +10,19 @@ export default class App extends Component {
     characters: [],
     name: '',
     job: '',
-    isEditing: false
+    isEditing: false,
+    currentId: '',
   }
 
   componentDidMount() {
     this.setState({
-      characters
+      characters,
     })
   }
 
-  onNameChange = name => {
+  handleChange = e => {
     this.setState({
-      name
-    })
-  }
-
-  onJobChange = job => {
-    this.setState({
-      job
+      [e.target.name]: e.target.value,
     })
   }
 
@@ -38,83 +33,72 @@ export default class App extends Component {
       alert('Please fill out both fields.')
     } else {
       e.preventDefault()
-      this.setState(prevState => {
-        return {
-          characters: [...characters, { name, job, id: uuidv4() }],
-          name: '',
-          job: ''
-        }
+      this.setState({
+        characters: [...characters, { name, job, id: uuidv4() }],
+        name: '',
+        job: '',
       })
     }
   }
+
   handleDelete = id => {
     const { characters } = this.state
     const notDeleted = characters.filter(character => character.id !== id)
     this.setState({
-      characters: notDeleted
+      characters: notDeleted,
     })
   }
 
   toggleEdit = () => {
     this.setState(prevState => {
       return {
-        isEditing: !prevState.isEditing
+        isEditing: !prevState.isEditing,
       }
     })
   }
 
-  handleEdit = (e, id) => {
-    console.log(this.state)
+  setCurrentId = id => {
+    this.setState({ currentId: id })
+  }
+
+  handleEdit = e => {
     e.preventDefault()
-    //copy the original - work up to id to "id" the object
-    //find the index of object
-    //copy array to index, insert new updates, copy the rest
-    const { characters, job, name } = this.state
-    const index = characters.findIndex(character => character.id === id)
-    console.log('INDEX', index)
-    const slice = [
-      ...characters.slice(0, index),
-      { name, job },
-      { ...characters.slice(index + 1) }
-    ]
-    console.log(slice)
-    this.setState({
-      characters: [
-        ...characters.slice(0, index),
-        { name, job },
-        ...characters.slice(index + 1)
-      ]
+    const { characters, job, name, currentId } = this.state
+    const index = characters.findIndex(character => character.id === currentId)
+    this.setState(prevState => {
+      return {
+        characters: [
+          ...characters.slice(0, index),
+          { name, job },
+          ...characters.slice(index + 1),
+        ],
+        name: '',
+        job: '',
+        isEditing: !prevState.isEditing,
+      }
     })
   }
 
   render() {
-    const { characters, name, job, id, isEditing } = this.state
+    const { characters, name, job, isEditing } = this.state
     return (
       <div className="medium-container alternate-background">
         <Table
           characters={characters}
           handleDelete={this.handleDelete}
           toggleEdit={this.toggleEdit}
-          id={id}
+          setCurrentId={this.setCurrentId}
         />
         <Form
           name={name}
           job={job}
-          onNameChange={this.onNameChange}
+          isEditing={isEditing}
           handleSubmit={this.handleSubmit}
-          onJobChange={this.onJobChange}
+          handleChange={this.handleChange}
           handleReset={this.handleReset}
           handleEdit={this.handleEdit}
-          isEditing={isEditing}
         />
       </div>
     )
   }
 }
-//* 2 INPUTS = NAME INPUT && JOB INPUT
-//* FORM (PARENT OF INPUTS)
-//* APP --> RENDER IT ALL <FORM/> IN APP
-
-//* TABLE
-//* TABLE HEADER TABLE BODY (2 COMPONENTS)
-//* 2 BUTTONS --> ADD DELETE // ADD EDIT
